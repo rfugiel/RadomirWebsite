@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Date Picker Options</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="lightpick.js"></script>  
+<link rel="stylesheet" type="text/css" href="css/lightpick.css">  
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="css/daterangepicker.css">
+
+
+</head>
+<body style="padding-bottom:250px;">
+
+<div class="jumbotron text-center">
+  <h1>Date Picker Options</h1>
+  <p>There can only be one...</p> 
+</div>
+
+<div class="text-center">
+<h2>Date Range</h2>
+<br><br>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Option #1</h3>
+      <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
+    </div>
+    <div class="col-sm-4 offset-md-3">
+      <h3>Option #2</h3>
+      <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+      <i class="fa fa-calendar"></i>&nbsp;
+      <span></span> <i class="fa fa-caret-down"></i>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Option #3</h3>
+      <input type="text" class="form-control" id="demo-3">    
+    </div>
+    <div class="col-sm-4 offset-md-3">
+      <h3>Option #4</h3>
+      <div class="row">
+    <div class="col">
+      <label>Start Date</label>
+      <input type="text" class="form-control" id="demo-4_1">
+    </div>
+    <div class="col">
+      <label>End Date</label>
+      <input type="text" class="form-control" id="demo-4_2">
+    </div>
+      </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Option #5</h3>
+      <input type="text" class="form-control" name="demo-5">
+      </div>
+  </div>
+</div>
+
+<br><br>
+
+<div class="text-center">
+ <hr><br> 
+<h2>Single Date</h2>
+<br><br>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Option #1</h3>
+      <input type="text" class="form-control" name="single_date_1"/>
+    </div>
+    <div class="col-sm-4 offset-md-3">
+      <h3>Option #2</h3>
+      <input type="text" class="form-control" id="single_date_2"/>
+    </div>
+  </div>
+  <br><br>
+</div>
+
+</body>
+</html>
+
+
+<script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+});
+</script>
+
+<script type="text/javascript">
+ var picker = new Lightpick({
+    field: document.getElementById('demo-3'),
+    singleDate: false,
+    onSelect: function(start, end){
+        var str = '';
+        str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
+        str += end ? end.format('Do MMMM YYYY') : '...';
+    }
+});
+</script>
+
+<script type="text/javascript">
+  var picker = new Lightpick({
+    field: document.getElementById('demo-4_1'),
+    secondField: document.getElementById('demo-4_2'),
+    singleDate: false,
+    onSelect: function(start, end){
+        var str = '';
+        str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
+        str += end ? end.format('Do MMMM YYYY') : '...';
+    }
+});
+</script>
+
+<script>
+$(function() {
+  $('input[name="single_date_1"]').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    minYear: 1901,
+    maxYear: parseInt(moment().format('YYYY'),10)
+  }, function(start, end, label) {
+  });
+});
+</script>
+
+<script type="text/javascript">
+  var picker = new Lightpick({
+    field: document.getElementById('single_date_2'),
+    onSelect: function(date){
+        document.getElementById('single_date_2').innerHTML = date.format('Do MMMM YYYY');
+    }
+});
+</script>
+
+<script type="text/javascript">
+  // mydaterangepicker
+        $('input[name="demo-5"]').mydaterangepicker(
+                {
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    }
+                },
+                function (start, end, label) {
+                   
+                }
+        );
+
+</script>
